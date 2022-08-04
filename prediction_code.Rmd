@@ -2,7 +2,9 @@
 title: "Prediction_Project"
 author: "David Zepeda"
 date: "8/3/2022"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 
@@ -389,10 +391,74 @@ New_How <- How_data%>%
 
 ```
 
+```{r}
+    New_Fred <- Fred_data
+  
+
+```
 
 
+```{r}
+New_Fred <- Fred_data%>%
+ 
+ mutate(
+   Inf_rate =  Income_average * .066,
+  Income_average = Income_average + Inf_rate
+ )
+
+```
+
+```{r}
+    New_PRF <- PRF_data
+  
+
+```
 
 
+```{r}
+New_PRF <- PRF_data%>%
+ 
+ mutate(
+   Inf_rate =  Income_average * .066,
+  Income_average = Income_average + Inf_rate
+ )
+
+```
+
+
+```{r}
+    New_Char <- Char_data
+  
+
+```
+
+
+```{r}
+New_Char <- Char_data%>%
+ 
+ mutate(
+   Inf_rate =  Income_average * .066,
+  Income_average = Income_average + Inf_rate
+ )
+
+```
+
+```{r}
+    New_Fair <- Fair_data
+  
+
+```
+
+
+```{r}
+New_Fair <- Fair_data%>%
+ 
+ mutate(
+   Inf_rate =  Income_average * .066,
+  Income_average = Income_average + Inf_rate
+ )
+
+```
 
 
 
