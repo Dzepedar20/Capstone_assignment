@@ -300,6 +300,124 @@ glance()
 
 
 
+```{r}
+    New_mont <- Mont_data
+  
+
+```
+
+
+```{r}
+New_mont <- Mont_data%>%
+ 
+ mutate(
+   Inf_rate =  Income_average * .066,
+  Income_average = Income_average + Inf_rate
+ )
+
+```
+
+
+
+```{r}
+      model_pre3 <- glm(
+        Home_Price ~ Income_average + Price_Home_average+ Inf_rate ,
+        data = prediction_data
+      )
+```
+
+
+```{r}
+      preds2 <- predict(model_pre2, type = "response")
+```
+
+```{r}
+      summary(model_pre3)
+```
+
+
+```{r}
+    New_Loud <- Loud_data
+  
+
+```
+
+
+```{r}
+New_Loud <- Loud_data%>%
+ 
+ mutate(
+   Inf_rate =  Income_average * .066,
+  Income_average = Income_average + Inf_rate
+ )
+
+```
+
+
+```{r}
+    New_Cecil <- Cecil_data
+  
+
+```
+
+
+```{r}
+New_Cecil <- Cecil_data%>%
+ 
+ mutate(
+   Inf_rate =  Income_average * .066,
+  Income_average = Income_average + Inf_rate
+ )
+
+```
+
+
+```{r}
+    New_How <- How_data
+  
+
+```
+
+
+```{r}
+New_How <- How_data%>%
+ 
+ mutate(
+   Inf_rate =  Income_average * .066,
+  Income_average = Income_average + Inf_rate
+ )
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
