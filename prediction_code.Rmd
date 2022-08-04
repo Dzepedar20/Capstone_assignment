@@ -1,0 +1,318 @@
+---
+title: "Prediction_Project"
+author: "David Zepeda"
+date: "8/3/2022"
+output: html_document
+---
+
+
+```{r setup, include = FALSE}
+# DO NOT ALTER THIS CHUNK
+knitr::opts_chunk$set(
+  echo = TRUE,
+  eval = TRUE,
+  fig.width = 5,
+  fig.asp = 0.618,
+  out.width = "70%",
+  dpi = 120,
+  fig.align = "center",
+  cache = FALSE
+)
+# Cost function for cross validation
+cost <- function(obs, pred) {
+  outcome <- pred > 0.5
+  return(1 - (sum(obs == outcome) / length(obs)))
+}
+# Load required packages
+library(tidyverse)
+library(ggmosaic)
+library(modelr)
+library(boot)
+library(broom)
+
+```
+
+```{r}
+  prediction_data <- read.csv(file = "Capstone_project_data_csv.csv")
+
+```
+
+```{r}
+  head(prediction_data)
+
+```
+
+```{r}
+  summary(prediction_data)
+```
+
+
+```{r}
+prediction_data%>%
+      ggplot() +
+      geom_bar(mapping = aes(x = County, fill = County)) + theme(axis.text.x = element_text(angle = 50))
+      labs(title = "County distribution" ,
+           x = "County")
+```
+
+```{r}
+  prediction_data %>%
+      ggplot() +
+      geom_histogram(mapping = aes(x = Income_average))+
+      labs(title = "Income Distribution", 
+           x = "Total Income")
+
+```
+
+
+```{r}
+  prediction_data%>%
+summarise(
+mean = mean(Home_Price),
+median = median(Home_Price),
+sd = sd(Home_Price),
+iqr = IQR(Home_Price),
+min = min(Home_Price),
+max = max(Home_Price)
+)
+
+
+
+
+```
+
+```{r}
+      boxplot(prediction_data$Income_average)
+```
+
+
+
+
+
+```{r}
+  model.lm <- lm(formula = Home_Price ~ Price_Home_average , data = prediction_data)
+summary(model.lm)
+```
+
+
+```{r}
+  Mont_data <- prediction_data %>% 
+  filter(ID <= 5)
+```
+
+
+
+```{r}
+  Mont_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = Address, y = Home_Price, group = 1), color = 'red') + theme(axis.text.x = element_text(angle = 50))+
+      labs(title = "Current Home Prices in Montgomery", 
+           x = "Address")
+
+```
+
+
+
+
+
+
+```{r}
+  Loud_data <- prediction_data %>% 
+  filter(ID >= 6 & ID <= 10)
+```
+
+```{r}
+ Loud_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = Address, y = Home_Price, group = 1), color = 'blue') + theme(axis.text.x = element_text(angle = 50))+
+      labs(title = "Current Home Prices in Loudoun", 
+           x = "Address")
+
+```
+
+
+```{r}
+  Cecil_data <- prediction_data %>% 
+  filter(ID >= 11 & ID <= 15)
+```
+
+
+```{r}
+ Cecil_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = Address, y = Home_Price, group = 1), color = 'green') + theme(axis.text.x = element_text(angle = 50))+
+      labs(title = "Current Home Prices in Cecil", 
+           x = "Address")
+
+```
+
+
+```{r}
+  How_data <- prediction_data %>% 
+  filter(ID >= 16 & ID <= 20)
+```
+
+```{r}
+ How_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = Address, y = Home_Price, group = 1), color = 'purple') + theme(axis.text.x = element_text(angle = 30))+
+      labs(title = "Current Home Prices in Howard", 
+           x = "Address")
+
+```
+
+```{r}
+  Fred_data <- prediction_data %>% 
+  filter(ID >= 21 & ID <= 27)
+```
+
+
+```{r}
+ Fred_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = Address, y = Home_Price, group = 1), color = 'orange') + theme(axis.text.x = element_text(angle = 50))+
+      labs(title = "Current Home Prices in Frederick", 
+           x = "Address")
+
+```
+
+
+```{r}
+  PRF_data <- prediction_data %>% 
+  filter(ID >= 28 & ID <= 35)
+```
+
+
+```{r}
+ PRF_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = Address, y = Home_Price, group = 1), color = 'brown') + theme(axis.text.x = element_text(angle = 50))+
+      labs(title = "Current Home Prices in Prince George", 
+           x = "Address")
+
+```
+
+
+```{r}
+  Char_data <- prediction_data %>% 
+  filter(ID >= 36 & ID <= 40)
+```
+
+```{r}
+ Char_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = Address, y = Home_Price, group = 1), color = 'black') + theme(axis.text.x = element_text(angle = 35))+
+      labs(title = "Current Home Prices in Charles", 
+           x = "Address")
+
+```
+
+
+```{r}
+  Fair_data <- prediction_data %>% 
+  filter(ID >= 41 & ID <= 45)
+```
+
+
+```{r}
+ Fair_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = Address, y = Home_Price, group = 1), color = 'red') + theme(axis.text.x = element_text(angle = 25))+
+      labs(title = "Current Home Prices in Fairfax", 
+           x = "Address")
+
+```
+
+
+```{r}
+  summary(Mont_data)
+```
+
+
+```{r}
+  summary(Loud_data)
+```
+
+```{r}
+  summary(Cecil_data)
+```
+
+
+
+
+```{r}
+  summary(How_data)
+```
+
+
+```{r}
+  summary(Fred_data)
+```
+
+
+
+```{r}
+  summary(PRF_data)
+```
+
+
+
+```{r}
+  summary(Char_data)
+```
+
+```{r}
+  model_1 <- lm(Income_average ~ Home_Price, data = prediction_data, y = TRUE, x = TRUE)
+
+```
+
+
+```{r}
+  model_1 %>%
+tidy()
+
+```
+
+```{r}
+  model_1 %>%
+glance()
+
+```
+
+
+```{r}
+      model_pre2 <- glm(
+        Home_Price ~ Income_average + Price_Home_average ,
+        data = prediction_data
+      )
+```
+
+```{r}
+      summary(model_pre2)
+```
+
+
+```{r}
+      preds1 <- predict(model_pre2, type = "response")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
