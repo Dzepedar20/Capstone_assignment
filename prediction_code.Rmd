@@ -612,6 +612,42 @@ labs(title=" New Income")
 
 
 
+```{r}
+ pre_df %>%
+      ggplot() +
+      geom_line(mapping = aes(x = County, y = Income_average, group = 1), color = 'red') + theme(axis.text.x = element_text(angle = 25))+
+      labs(title = "New Income Average", 
+           x = "County")
+
+```
+
+
+
+```{r}
+ prediction_data %>%
+      ggplot() +
+      geom_line(mapping = aes(x = County, y = Income_average, group = 1), color = 'red') + theme(axis.text.x = element_text(angle = 25))+
+      labs(title = "Old Income Average", 
+           x = "County")
+
+```
+
+
+
+```{r}
+ pre_df %>%
+      ggplot() +
+      geom_line(mapping = aes(x = County, y = Inf_rate, group = 1), color = 'red') + theme(axis.text.x = element_text(angle = 25))+
+      labs(title = "Current Home Prices in Fairfax", 
+           x = "Address")
+
+```
+
+```{r}
+  pre_df%>%
+  summary(Inf_rate)
+
+```
 
 
 
