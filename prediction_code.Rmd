@@ -31,6 +31,9 @@ library(ggmosaic)
 library(modelr)
 library(boot)
 library(broom)
+install.packages("rpart.plot")
+library(rpart.plot)
+library(ggplot2)
 
 ```
 
@@ -462,30 +465,150 @@ New_Fair <- Fair_data%>%
 
 
 
+```{r}
+model.tree1 <- rpart(Home_Price ~., data = prediction_data, method = 'anova')
+summary(model.tree1)
+rpart.plot(model.tree1)
+plotcp(model.tree1)
+```
+
+
+
+
+```{r}
+  
+  new_predictedset <- rbind( New_mont, New_Loud, New_How,
+        New_Fred, New_PRF, New_Char, New_Fair,New_Cecil)
+
+```
+
+```{r}
+  arrange(new_predictedset, ID, .by_group = FALSE)
+
+```
+
+
+```{r}
+
+  pre_df<- new_predictedset %>%
+add_predictions(model_pre3) %>%
+add_residuals(model_pre3)
+
+```
+
+
+
+```{r}
+  pre_df %>%
+ggplot() +
+geom_point(mapping = aes(x = Home_Price, y = pred)) +
+geom_abline(slope = 1, intercept = 0) +
+labs(title=" Price of Homes ")
+
+
+
+
+```
+
+
+```{r}
+  K_pred_df <- pre_df%>%
+  select(Income_average, Price_Home_average, Home_Price,Inf_rate, pred, resid)
+
+
+```
 
 
 
 
 
+```{r}
+pred_cluster <-kmeans(K_pred_df, 2)
+
+
+```
+
+```{r}
+  kmean_pred <- function(k) {
+    cluster <- kmeans(K_pred_df, 2)
+    return (cluster$kmean_pred)
+}
+
+
+```
+
+```{r}
+kmean_pred(2)
+
+
+```
+
+```{r}
+
+k_max <-10
+range_k <- sapply(10:k_max, kmean_pred)
+
+
+```
+
+
+```{r}
+
+  k_elbow <-data_frame(2:k_max, range_k)
+
+```
 
 
 
 
+```{r}
+  new_predictedset %>%
+      ggplot() +
+      geom_histogram(mapping = aes(x = Income_average))+
+      labs(title = "New Income Distribution", 
+           x = "New Needed Income")
+
+```
+
+
+```{r}
+      boxplot(new_predictedset$Income_average)
+```
+
+
+```{r}
+  summary(new_predictedset)
+```
+
+
+```{r}
+  pre_df %>%
+ggplot() +
+geom_point(mapping = aes(x = Income_average, y = County)) +
+geom_abline(slope = 1, intercept = 0) +
+labs(title=" New Income")
 
 
 
 
+```
 
 
 
 
+Old average Income 
+
+```{r}
+  prediction_data %>%
+ggplot() +
+geom_point(mapping = aes(x = Income_average, y = County)) +
+geom_abline(slope = 1, intercept = 0) +
+labs(title=" New Income")
 
 
 
 
-
-
-
+```
 
 
 
