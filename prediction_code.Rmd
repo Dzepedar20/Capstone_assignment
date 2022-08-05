@@ -466,7 +466,7 @@ New_Fair <- Fair_data%>%
 
 
 ```{r}
-model.tree1 <- rpart(Home_Price ~., data = prediction_data, method = 'anova')
+model.tree1 <- rpart(Income_average ~., data = prediction_data, method = 'anova')
 summary(model.tree1)
 rpart.plot(model.tree1)
 plotcp(model.tree1)
@@ -649,6 +649,50 @@ labs(title=" New Income")
 
 ```
 
+
+```{r}
+  plot(model_pre3)
+
+```
+
+
+```{r}
+      model_pre4 <- glm(
+        Income_average ~ Home_Price,
+        data = pre_df
+      )
+```
+
+
+```{r}
+  plot(model_pre4)
+
+```
+
+
+```{r}
+      summary(model_pre4)
+```
+
+```{r}
+      model_pre5 <- glm(
+        Home_Price ~ Income_average + Price_Home_average+ Inf_rate ,
+        data = K_pred_df
+      )
+```
+
+
+```{r}
+      summary(model_pre5)
+```
+
+
+```{r}
+model.tree1 <- rpart(Income_average ~ Home_Price, data = K_pred_df, method = 'anova')
+summary(model.tree1)
+rpart.plot(model.tree1)
+plotcp(model.tree1)
+```
 
 
 
