@@ -37,19 +37,29 @@ library(ggplot2)
 
 ```
 
+
+#Opening of the CSV and naming under prediction_data
+
 ```{r}
   prediction_data <- read.csv(file = "Capstone_project_data_csv.csv")
 
 ```
+
+#Displaying the Top of the dataset
 
 ```{r}
   head(prediction_data)
 
 ```
 
+
+#Summary statistics of data from beginning 
+
 ```{r}
   summary(prediction_data)
 ```
+
+#Bar Graph of county and homes acquired from there
 
 
 ```{r}
@@ -60,6 +70,8 @@ prediction_data%>%
            x = "County")
 ```
 
+#Histogram of the incomes 
+
 ```{r}
   prediction_data %>%
       ggplot() +
@@ -69,6 +81,7 @@ prediction_data%>%
 
 ```
 
+#Summary of just the Home_Price
 
 ```{r}
   prediction_data%>%
@@ -86,12 +99,15 @@ max = max(Home_Price)
 
 ```
 
+#Boxplot of Income_average of the first dataset
+
 ```{r}
       boxplot(prediction_data$Income_average)
 ```
 
 
 
+#lm model of home price over average home price
 
 
 ```{r}
@@ -99,6 +115,7 @@ max = max(Home_Price)
 summary(model.lm)
 ```
 
+#Filtering per county In this case montgomery 
 
 ```{r}
   Mont_data <- prediction_data %>% 
@@ -118,6 +135,7 @@ summary(model.lm)
 
 
 
+#Filtering per county In this case Loudoun
 
 
 
@@ -135,6 +153,7 @@ summary(model.lm)
 
 ```
 
+#Filtering per county In this case Cecil
 
 ```{r}
   Cecil_data <- prediction_data %>% 
@@ -152,6 +171,9 @@ summary(model.lm)
 ```
 
 
+#Filtering per county In this case Howard
+
+
 ```{r}
   How_data <- prediction_data %>% 
   filter(ID >= 16 & ID <= 20)
@@ -165,6 +187,9 @@ summary(model.lm)
            x = "Address")
 
 ```
+
+#Filtering per county In this case Frederick
+
 
 ```{r}
   Fred_data <- prediction_data %>% 
@@ -180,6 +205,8 @@ summary(model.lm)
            x = "Address")
 
 ```
+
+#Filtering per county In this case Prince George
 
 
 ```{r}
@@ -197,6 +224,8 @@ summary(model.lm)
 
 ```
 
+#Filtering per county In this case Charles
+
 
 ```{r}
   Char_data <- prediction_data %>% 
@@ -211,6 +240,8 @@ summary(model.lm)
            x = "Address")
 
 ```
+
+#Filtering per county In this case Fairfax
 
 
 ```{r}
@@ -228,6 +259,7 @@ summary(model.lm)
 
 ```
 
+#Separate summaries by counties
 
 ```{r}
   summary(Mont_data)
@@ -303,7 +335,7 @@ glance()
 
 
 
-
+#loading each county with an 6% inflation rate
 
 ```{r}
     New_mont <- Mont_data
@@ -464,6 +496,7 @@ New_Fair <- Fair_data%>%
 ```
 
 
+#small tree model that displays the income per county
 
 ```{r}
 model.tree1 <- rpart(Income_average ~., data = prediction_data, method = 'anova')
@@ -473,6 +506,7 @@ plotcp(model.tree1)
 ```
 
 
+#Binding all separated county set into one
 
 
 ```{r}
@@ -496,7 +530,7 @@ add_residuals(model_pre3)
 
 ```
 
-
+#point model of the new incomes with the inflation rate intop
 
 ```{r}
   pre_df %>%
@@ -559,7 +593,7 @@ range_k <- sapply(10:k_max, kmean_pred)
 ```
 
 
-
+#The new income distribution whihc is higher than the older model
 
 ```{r}
   new_predictedset %>%
@@ -570,11 +604,13 @@ range_k <- sapply(10:k_max, kmean_pred)
 
 ```
 
+#Boxplot of new income average after inflation
 
 ```{r}
       boxplot(new_predictedset$Income_average)
 ```
 
+#summary of new statistics
 
 ```{r}
   summary(new_predictedset)
@@ -603,14 +639,14 @@ Old average Income
 ggplot() +
 geom_point(mapping = aes(x = Income_average, y = County)) +
 geom_abline(slope = 1, intercept = 0) +
-labs(title=" New Income")
+labs(title=" old Income")
 
 
 
 
 ```
 
-
+#comparision of old and new incomes needed
 
 ```{r}
  pre_df %>%
