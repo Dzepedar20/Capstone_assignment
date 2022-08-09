@@ -10,7 +10,7 @@ While searching for similar research I came upon a short blog written by Cororat
 
 Data Exploration: 
 
-	Since the data set that I am using was created myself, I will be all 6 of the variables which are ID which differentiates each home, County, Income_average which is the average income in that county, Price_Home_average which is the average home price in that area, Home_Price which is the price of the home which was built there, Address and the State of which it is in. I won’t need to scratch anything out as I only included what is necessary for this to work, I might end up adding 1 or 2 more variables if I need to.
+***	Since the data set that I am using was created myself, I will be all 6 of the variables which are ID which differentiates each home, County, Income_average which is the average income in that county, Price_Home_average which is the average home price in that area, Home_Price which is the price of the home which was built there, Address and the State of which it is in. I won’t need to scratch anything out as I only included what is necessary for this to work, I might end up adding 1 or 2 more variables if I need to.
 	 
 
 
